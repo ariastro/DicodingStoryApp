@@ -9,6 +9,8 @@ import io.astronout.dicodingstoryapp.data.source.remote.model.LoginResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.RegisterResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryApi
+import io.astronout.dicodingstoryapp.domain.model.Login
+import io.astronout.dicodingstoryapp.domain.model.Register
 import io.astronout.dicodingstoryapp.vo.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -27,11 +29,11 @@ class DicodingStoryDataStore @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher
 ) : DicodingStoryRepository {
 
-    override fun login(email: String, password: String): Flow<Resource<LoginResponse>> = flow<Resource<LoginResponse>> {
+    override fun login(email: String, password: String): Flow<Resource<Login>> = flow<Resource<Login>> {
         emit(Resource.Loading())
         api.login(email, password).let {
             it.suspendOnSuccess {
-                emit(Resource.Success(data))
+                emit(Resource.Success(data.toLogin()))
             }.suspendOnError {
                 emit(Resource.Error(message()))
             }.suspendOnException {
@@ -44,11 +46,11 @@ class DicodingStoryDataStore @Inject constructor(
         name: String,
         email: String,
         password: String
-    ): Flow<Resource<RegisterResponse>> = flow<Resource<RegisterResponse>> {
+    ): Flow<Resource<Register>> = flow<Resource<Register>> {
         emit(Resource.Loading())
         api.register(name, email, password).let {
             it.suspendOnSuccess {
-                emit(Resource.Success(data))
+                emit(Resource.Success(data.toRegister()))
             }.suspendOnError {
                 emit(Resource.Error(message()))
             }.suspendOnException {

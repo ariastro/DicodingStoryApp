@@ -57,15 +57,14 @@ class AppModule {
         return Dispatchers.IO
     }
 
-    @Provides
-    @Singleton
-    fun provideDicodingStoryApi(dicodingStoryService: DicodingStoryService) = DicodingStoryApi(dicodingStoryService)
+//    @Provides
+//    @Singleton
+//    fun provideDicodingStoryApi(dicodingStoryService: DicodingStoryService) = DicodingStoryApi(dicodingStoryService)
 
-    @Provides
-    @Singleton
-    fun providePokepediaRepository(dicodingStoryApi: DicodingStoryApi, ioDispatcher: CoroutineDispatcher): DicodingStoryRepository {
-        return DicodingStoryDataStore(dicodingStoryApi, ioDispatcher)
-
-    }
+//    @Provides
+//    @Singleton
+//    fun provideDicodingRepository(dicodingStoryApi: DicodingStoryApi, ioDispatcher: CoroutineDispatcher): DicodingStoryRepository {
+//        return DicodingStoryDataStore(dicodingStoryApi, ioDispatcher)
+//    }
 
 }

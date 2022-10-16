@@ -2,6 +2,7 @@ package io.astronout.dicodingstoryapp.data.source.remote.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.astronout.dicodingstoryapp.domain.model.Login
 
 @JsonClass(generateAdapter = true)
 data class LoginResponse(
@@ -21,4 +22,17 @@ data class LoginResponse(
         @Json(name = "userId")
         val userId: String? = null
     )
+
+    fun toLogin(): Login {
+        return Login(
+            error = error ?: false,
+            loginResult = Login.LoginResult(
+                name = loginResult?.name.orEmpty(),
+                token = loginResult?.token.orEmpty(),
+                userId = loginResult?.userId.orEmpty()
+            ),
+            message = message.toString()
+        )
+    }
+
 }
