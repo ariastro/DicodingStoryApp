@@ -1,6 +1,7 @@
 package io.astronout.dicodingstoryapp.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -102,4 +104,13 @@ fun MultiStateView.showLoadingLayout() {
 
 fun MultiStateView.showEmptyLayout() {
     viewState = MultiStateView.ViewState.EMPTY
+}
+
+fun AppCompatEditText.setDrawable(
+    start: Drawable? = null,
+    top: Drawable? = null,
+    end: Drawable? = null,
+    bottom: Drawable? = null
+) {
+    setCompoundDrawablesWithIntrinsicBounds(start, top, end, bottom)
 }
