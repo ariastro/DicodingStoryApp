@@ -2,18 +2,19 @@ package io.astronout.dicodingstoryapp.data.source.remote.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.astronout.dicodingstoryapp.domain.model.Story
 
 @JsonClass(generateAdapter = true)
 data class StoriesResponse(
     @Json(name = "error")
     val error: Boolean? = null,
     @Json(name = "listStory")
-    val listStory: List<Story>? = null,
+    val listStory: List<StoryResponse>? = null,
     @Json(name = "message")
     val message: String? = null
 ) {
     @JsonClass(generateAdapter = true)
-    data class Story(
+    data class StoryResponse(
         @Json(name = "createdAt")
         val createdAt: String? = null,
         @Json(name = "description")
@@ -28,5 +29,17 @@ data class StoriesResponse(
         val name: String? = null,
         @Json(name = "photoUrl")
         val photoUrl: String? = null
-    )
+    ) {
+        fun toStory(): Story {
+            return Story(
+                createdAt = createdAt.orEmpty(),
+                description = description.orEmpty(),
+                id = id.orEmpty(),
+                lat = lat ?: 0.0,
+                lon = lon ?: 0.0,
+                name = name.orEmpty(),
+                photoUrl = photoUrl.orEmpty()
+            )
+        }
+    }
 }

@@ -42,11 +42,12 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), LoginContract {
                 when (it) {
                     is Resource.Error -> {
                         progress.dismiss()
-                        showToast(it.message.toString())
+                        showToast(it.message)
                     }
                     is Resource.Loading -> progress.show()
                     is Resource.Success -> {
                         progress.dismiss()
+                        viewModel.saveAuthToken(it.data.loginResult.token)
                         navigateToHomeScreen()
                     }
                 }

@@ -27,7 +27,7 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="StoryAppTypographyStyles.Heading2" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="StoryAppTypographyStyles.Heading2" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">24sp</item>
@@ -41,6 +41,25 @@
     </style>
 
     <style name="StoryAppTypographyStyles.Heading2.Medium" parent="StoryAppTypographyStyles.Heading2">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="StoryAppTypographyStyles.Heading3" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="StoryAppTypographyStyles.Heading3.Bold" parent="StoryAppTypographyStyles.Heading3">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="StoryAppTypographyStyles.Heading3.Medium" parent="StoryAppTypographyStyles.Heading3">
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:includeFontPadding">false</item>

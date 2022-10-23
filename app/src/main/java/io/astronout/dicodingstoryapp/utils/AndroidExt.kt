@@ -20,6 +20,7 @@ import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.kennyc.view.MultiStateView
+import io.astronout.dicodingstoryapp.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -99,6 +100,8 @@ fun ImageView.setImageUrl(url: String) {
     Glide
         .with(context)
         .load(url)
+        .placeholder(R.drawable.ic_placeholder)
+        .error(R.drawable.ic_placeholder)
         .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
         .into(this)
 }

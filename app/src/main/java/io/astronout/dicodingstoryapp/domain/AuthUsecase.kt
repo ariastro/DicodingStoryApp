@@ -11,4 +11,5 @@ interface AuthUsecase {
 
     fun register(name: String, email: String, password: String): Flow<Resource<Register>>
 
+    suspend fun saveAuthToken(token: String)
 }

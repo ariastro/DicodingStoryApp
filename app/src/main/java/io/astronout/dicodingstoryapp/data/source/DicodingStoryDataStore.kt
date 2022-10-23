@@ -1,14 +1,12 @@
-package io.astronout.dicodingstoryapp.data.source.remote
+package io.astronout.dicodingstoryapp.data.source
 
 import com.skydoves.sandwich.map
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import io.astronout.dicodingstoryapp.data.source.remote.model.AddNewStoryResponse
-import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
+import io.astronout.dicodingstoryapp.data.source.local.LocalDataSource
+import io.astronout.dicodingstoryapp.data.source.remote.ErrorResponseMapper
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryApi
-import io.astronout.dicodingstoryapp.domain.model.Login
-import io.astronout.dicodingstoryapp.domain.model.Register
 import io.astronout.dicodingstoryapp.vo.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -25,50 +23,53 @@ import javax.inject.Inject
 
 class DicodingStoryDataStore @Inject constructor(
     private val api: DicodingStoryApi,
+    private val localDataSource: LocalDataSource,
     private val ioDispatcher: CoroutineDispatcher
 ) : DicodingStoryRepository {
 
-    override fun login(email: String, password: String): Flow<Resource<Login>> = flow<Resource<Login>> {
+    override fun login(email: String, password: String) = flow {
         api.login(email, password).let {
             it.suspendOnSuccess {
                 emit(Resource.Success(data.toLogin()))
             }.suspendOnError {
                 emit(Resource.Error(map(ErrorResponseMapper)?.message.orEmpty()))
             }.suspendOnException {
-                emit(Resource.Error(message))
+                emit(Resource.Error(message.orEmpty()))
             }
         }
-    }.onStart { emit(Resource.Loading()) }.flowOn(ioDispatcher)
+    }.onStart { emit(Resource.Loading) }.flowOn(ioDispatcher)
 
     override fun register(
         name: String,
         email: String,
         password: String
-    ): Flow<Resource<Register>> = flow<Resource<Register>> {
+    ) = flow {
         api.register(name, email, password).let {
             it.suspendOnSuccess {
                 emit(Resource.Success(data.toRegister()))
             }.suspendOnError {
                 emit(Resource.Error(map(ErrorResponseMapper)?.message.orEmpty()))
             }.suspendOnException {
-                emit(Resource.Error(message))
+                emit(Resource.Error(message.orEmpty()))
             }
         }
-    }.onStart { emit(Resource.Loading()) }.flowOn(ioDispatcher)
+    }.onStart { emit(Resource.Loading) }.flowOn(ioDispatcher)
 
-    override fun getAllStories(): Flow<Resource<StoriesResponse>> = flow<Resource<StoriesResponse>> {
+    override fun getAllStories() = flow {
         api.getAllStories().let {
             it.suspendOnSuccess {
-                emit(Resource.Success(data))
+                emit(Resource.Success(data.listStory?.map { data ->
+                    data.toStory()
+                }.orEmpty()))
             }.suspendOnError {
                 emit(Resource.Error(map(ErrorResponseMapper)?.message.orEmpty()))
             }.suspendOnException {
-                emit(Resource.Error(message))
+                emit(Resource.Error(message.orEmpty()))
             }
         }
-    }.onStart { emit(Resource.Loading()) }.flowOn(ioDispatcher)
+    }.onStart { emit(Resource.Loading) }.flowOn(ioDispatcher)
 
-    override fun addNewStory(file: File, description: String): Flow<Resource<AddNewStoryResponse>> = flow<Resource<AddNewStoryResponse>> {
+    override fun addNewStory(file: File, description: String) = flow {
         val requestImage = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
         val requestDescription = description.toRequestBody("text/plain".toMediaType())
@@ -78,8 +79,15 @@ class DicodingStoryDataStore @Inject constructor(
             }.suspendOnError {
                 emit(Resource.Error(map(ErrorResponseMapper)?.message.orEmpty()))
             }.suspendOnException {
-                emit(Resource.Error(message))
+                emit(Resource.Error(message.orEmpty()))
             }
         }
-    }.onStart { emit(Resource.Loading()) }.flowOn(ioDispatcher)
+    }.onStart { emit(Resource.Loading) }.flowOn(ioDispatcher)
+
+    override fun getAuthToken(): Flow<String> = localDataSource.getAuthToken()
+
+    override suspend fun saveAuthToken(token: String) {
+        localDataSource.saveAuthToken(token)
+    }
+
 }

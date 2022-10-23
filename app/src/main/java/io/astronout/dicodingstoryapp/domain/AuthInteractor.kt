@@ -1,6 +1,6 @@
 package io.astronout.dicodingstoryapp.domain
 
-import io.astronout.dicodingstoryapp.data.source.remote.DicodingStoryRepository
+import io.astronout.dicodingstoryapp.data.source.DicodingStoryRepository
 import io.astronout.dicodingstoryapp.domain.model.Login
 import io.astronout.dicodingstoryapp.domain.model.Register
 import io.astronout.dicodingstoryapp.vo.Resource
@@ -15,6 +15,10 @@ class AuthInteractor @Inject constructor(private val repo: DicodingStoryReposito
 
     override fun register(name: String, email: String, password: String): Flow<Resource<Register>> {
         return repo.register(name, email, password)
+    }
+
+    override suspend fun saveAuthToken(token: String) {
+        repo.saveAuthToken(token)
     }
 
 }

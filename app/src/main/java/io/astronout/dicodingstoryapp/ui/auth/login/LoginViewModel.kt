@@ -14,7 +14,7 @@ class LoginViewModel @Inject constructor(private val authUsecase: AuthUsecase) :
 
     fun saveAuthToken(token: String) {
         viewModelScope.launch {
-
+            authUsecase.saveAuthToken(token)
         }
     }
 }

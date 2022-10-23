@@ -129,6 +129,10 @@ dependencies {
 
     // shimmer
     implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
+
+    // Data Store
+    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
+    implementation "androidx.datastore:datastore-preferences-core:$dataStoreVersion"
 }
 
 kapt {

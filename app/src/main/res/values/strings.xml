@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DicodingStoryApp</string>
+    <string name="app_name">Dicoding Stories</string>
     <string name="label_email">Email</string>
     <string name="error_email_not_valid">Email address is not valid</string>
     <string name="label_password">Password</string>
@@ -17,4 +17,6 @@
     <string name="label_login_here">Login here</string>
     <string name="label_register_success">Your account successfully registered</string>
     <string name="error_fullname_not_valid">Full Name can not be empty!</string>
+    <string name="label_create_a_story">Create a Story</string>
+    <string name="label_story_image">Story Image</string>
 </resources>
