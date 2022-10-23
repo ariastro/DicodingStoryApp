@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -69,11 +70,11 @@ dependencies {
     // navigationComponent
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation"
-
+    implementation "androidx.navigation:navigation-runtime-ktx:$navigation"
 
     // Activity KTX for viewModels()
-    implementation "androidx.activity:activity-ktx:$ktxVersion"
-    implementation "androidx.fragment:fragment-ktx:$ktxVersion"
+    implementation "androidx.activity:activity-ktx:$activityKtxVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 
     // viewBinding Helper
     implementation "com.github.yogacp:android-viewbinding:$viewbindingVersion"

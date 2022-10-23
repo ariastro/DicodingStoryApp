@@ -11,6 +11,8 @@ import io.astronout.dicodingstoryapp.data.source.remote.DicodingStoryDataStore
 import io.astronout.dicodingstoryapp.data.source.remote.DicodingStoryRepository
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryApi
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryService
+import io.astronout.dicodingstoryapp.domain.AuthInteractor
+import io.astronout.dicodingstoryapp.domain.AuthUsecase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
@@ -57,14 +59,16 @@ class AppModule {
         return Dispatchers.IO
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideDicodingStoryApi(dicodingStoryService: DicodingStoryService) = DicodingStoryApi(dicodingStoryService)
+    @Provides
+    @Singleton
+    fun provideDicodingRepository(dicodingStoryApi: DicodingStoryApi, ioDispatcher: CoroutineDispatcher): DicodingStoryRepository {
+        return DicodingStoryDataStore(dicodingStoryApi, ioDispatcher)
+    }
 
-//    @Provides
-//    @Singleton
-//    fun provideDicodingRepository(dicodingStoryApi: DicodingStoryApi, ioDispatcher: CoroutineDispatcher): DicodingStoryRepository {
-//        return DicodingStoryDataStore(dicodingStoryApi, ioDispatcher)
-//    }
+    @Provides
+    @Singleton
+    fun provideAuthUsecase(repo: DicodingStoryRepository): AuthUsecase {
+        return AuthInteractor(repo)
+    }
 
 }

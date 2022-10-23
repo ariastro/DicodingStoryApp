@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
@@ -15,14 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
+import com.bumptech.glide.GenericTransitionOptions
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.kennyc.view.MultiStateView
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.*
 
 fun View.toVisible() {
     visibility = View.VISIBLE
@@ -43,24 +43,6 @@ fun Fragment.showToast(message: String) {
 fun wait(delay: Long = 300, action: () -> Unit) =
     Handler(Looper.getMainLooper()).postDelayed(action, delay)
 
-private val shimmer =
-    Shimmer.AlphaHighlightBuilder()
-        .setDuration(1800)
-        .setBaseAlpha(0.7F)
-        .setHighlightAlpha(0.6F)
-        .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-        .setAutoStart(true)
-        .build()
-
-val shimmerDrawable = ShimmerDrawable().apply {
-    setShimmer(shimmer)
-}
-
-fun String.capitalize() = replaceFirstChar {
-    if (it.isLowerCase()) it.titlecase(
-        Locale.getDefault()
-    ) else it.toString()
-}
 
 fun Context.getColorResource(@ColorRes color: Int) = ContextCompat.getColor(this, color)
 fun Context.getColorStateListResource(@ColorRes color: Int) = ContextCompat.getColorStateList(this, color)
@@ -92,8 +74,6 @@ fun <T> Fragment.collectLifecycleFlow(flow: Flow<T>, collect: suspend (T) -> Uni
     }
 }
 
-fun View.onClick(block: View.OnClickListener) = setOnClickListener(block)
-
 fun MultiStateView.showDefaultLayout() {
     viewState = MultiStateView.ViewState.CONTENT
 }
@@ -113,4 +93,12 @@ fun AppCompatEditText.setDrawable(
     bottom: Drawable? = null
 ) {
     setCompoundDrawablesWithIntrinsicBounds(start, top, end, bottom)
+}
+
+fun ImageView.setImageUrl(url: String) {
+    Glide
+        .with(context)
+        .load(url)
+        .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
+        .into(this)
 }

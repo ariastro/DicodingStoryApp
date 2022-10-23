@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1595" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_undraw_social_sharing_re_pvmr.xml" value="0.1595" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/activity_main.xml" value="0.24615384615384617" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/fragment_login.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/fragment_register.xml" value="0.2359375" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/layout_progress_dialog.xml" value="0.1875" />
       </map>
     </option>
   </component>

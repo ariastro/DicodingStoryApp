@@ -12,15 +12,26 @@ import androidx.core.widget.doOnTextChanged
 import io.astronout.dicodingstoryapp.R
 import io.astronout.dicodingstoryapp.utils.setDrawable
 
-class PasswordEditText @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : AppCompatEditText(context, attrs, defStyleAttr) {
+class PasswordEditText : AppCompatEditText {
 
-    init {
+    var isValid = false
+
+    constructor(context: Context) : super(context) {
+        init()
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        init()
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init()
+    }
+
+    private fun init() {
         hint = context.getString(R.string.label_password)
         inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        setTextAppearance(R.style.StoryAppTypographyStyles_Body1)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setAutofillHints(AUTOFILL_HINT_PASSWORD)
         }
@@ -28,8 +39,11 @@ class PasswordEditText @JvmOverloads constructor(
         compoundDrawablePadding = 16
 
         doOnTextChanged { text, _, _, _ ->
-            if (!text.isNullOrEmpty() && text.length < 6) {
+            if (text.toString().isNotEmpty() && text.toString().length < 6) {
                 error = context.getString(R.string.error_password_not_valid)
+                isValid = false
+            } else {
+                isValid = true
             }
         }
     }
