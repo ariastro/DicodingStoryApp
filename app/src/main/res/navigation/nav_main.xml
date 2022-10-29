@@ -60,6 +60,19 @@
 		android:id="@+id/homeFragment"
 		android:name="io.astronout.dicodingstoryapp.ui.home.HomeFragment"
 		android:label="fragment_home"
-		tools:layout="@layout/fragment_home" />
+		tools:layout="@layout/fragment_home" >
+		<action
+			android:id="@+id/action_homeFragment_to_detailStoryFragment"
+			app:destination="@id/detailStoryFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/detailStoryFragment"
+		android:name="io.astronout.dicodingstoryapp.ui.detailstory.DetailStoryFragment"
+		android:label="fragment_detail_story"
+		tools:layout="@layout/fragment_detail_story" >
+		<argument
+			android:name="story"
+			app:argType="io.astronout.dicodingstoryapp.domain.model.Story" />
+	</fragment>
 
 </navigation>

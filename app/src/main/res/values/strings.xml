@@ -22,4 +22,5 @@
     <string name="label_dicoding_logo">Dicoding Logo</string>
     <string name="label_no_data_illustration">No Data Illustration</string>
     <string name="label_no_data_found">No Data Found!</string>
+    <string name="label_detail_story">Detail Story</string>
 </resources>

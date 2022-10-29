@@ -10,7 +10,7 @@ import io.astronout.dicodingstoryapp.domain.model.Story
 import io.astronout.dicodingstoryapp.utils.setImageUrl
 import io.astronout.dicodingstoryapp.utils.toDateString
 
-class StoryAdapter(private val onStoryClicked: (Story) -> Unit): ListAdapter<Story, StoryAdapter.ViewHolder>(
+class StoryAdapter(private val onStoryClicked: (Story, ItemStoryBinding) -> Unit): ListAdapter<Story, StoryAdapter.ViewHolder>(
     DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,8 +28,9 @@ class StoryAdapter(private val onStoryClicked: (Story) -> Unit): ListAdapter<Sto
                 tvUsername.text = story.name
                 tvDescription.text = story.description
                 tvDate.text = story.createdAt.toDateString()
+                ivStoryImage.transitionName = story.id
                 root.setOnClickListener {
-                    onStoryClicked(story)
+                    onStoryClicked(story, itemStoryBinding)
                 }
             }
         }

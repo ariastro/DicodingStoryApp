@@ -1,28 +1,22 @@
 package io.astronout.dicodingstoryapp.utils
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
-import com.google.android.material.card.MaterialCardView
 import com.kennyc.view.MultiStateView
 import io.astronout.dicodingstoryapp.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,20 +34,6 @@ fun View.toInvisible() {
 
 fun Fragment.showToast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-}
-
-fun Context.getColorResource(@ColorRes color: Int) = ContextCompat.getColor(this, color)
-fun Context.getColorStateListResource(@ColorRes color: Int) = ContextCompat.getColorStateList(this, color)
-fun Context.getDrawableResource(@DrawableRes drawable: Int) = ContextCompat.getDrawable(this, drawable)
-
-fun TextView.setTextColorResource(@ColorRes colorId: Int) {
-    setTextColor(context.getColorResource(colorId))
-}
-
-fun MaterialCardView.setCardBackgroundColorResource(colorId: Int) {
-    setCardBackgroundColor(
-        context.getColorResource(colorId)
-    )
 }
 
 fun <T> Fragment.collectLatestLifecycleFlow(flow: Flow<T>, collect: suspend (T) -> Unit) {
@@ -104,7 +84,15 @@ fun ImageView.setImageUrl(url: String) {
 }
 
 fun String.toDateString(): String {
-    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-    val date = sdf.parse(this) as Date
-    return DateFormat.getDateInstance(DateFormat.FULL).format(date)
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    return try {
+        val date = dateFormat.parse(this) ?: Date()
+        val hour = 3600 * 1000
+        val newDate = Date(date.time + 7 * hour)
+        dateFormat.applyPattern("dd MMM yyyy")
+        dateFormat.format(newDate)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+        ""
+    }
 }

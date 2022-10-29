@@ -24,4 +24,10 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(binding.navHostMain.id) as NavHostFragment
         navController = navHostFragment.navController
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        navController.navigateUp()
+        return true
+    }
+
 }
