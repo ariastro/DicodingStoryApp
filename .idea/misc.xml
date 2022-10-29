@@ -3,17 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/bg_shimmer.xml" value="0.16799999999999998" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1595" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1595" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_undraw_buffer.xml" value="0.121" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_undraw_donut_love.xml" value="0.1595" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_undraw_social_sharing.xml" value="0.121" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/drawable/ic_undraw_social_sharing_re_pvmr.xml" value="0.1595" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/activity_main.xml" value="0.24615384615384617" />
-        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/fragment_home.xml" value="0.18532818532818532" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/fragment_login.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/fragment_register.xml" value="0.2359375" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/fragment_splash_screen.xml" value="0.24615384615384617" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/item_story.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/layout_empty_story.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/layout_no_data_story.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/layout_progress_dialog.xml" value="0.1875" />
+        <entry key="..\:/AndroidStudioProjects/Dicoding/Intermediate/DicodingStoryApp/app/src/main/res/layout/layout_shimmer_stories.xml" value="0.2" />
       </map>
     </option>
   </component>

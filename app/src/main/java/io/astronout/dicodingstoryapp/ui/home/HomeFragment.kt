@@ -1,19 +1,65 @@
 package io.astronout.dicodingstoryapp.ui.home
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.viewbinding.library.fragment.viewBinding
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import io.astronout.dicodingstoryapp.R
+import io.astronout.dicodingstoryapp.databinding.FragmentHomeBinding
+import io.astronout.dicodingstoryapp.domain.model.Story
+import io.astronout.dicodingstoryapp.ui.base.BaseFragment
+import io.astronout.dicodingstoryapp.utils.*
+import io.astronout.dicodingstoryapp.vo.Resource
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    private val binding: FragmentHomeBinding by viewBinding()
+    private val viewModel: HomeViewModel by viewModels()
+    private val navController: NavController? by lazy { findNavController() }
+    private val adapter: StoryAdapter by lazy {
+        StoryAdapter { onNavigateToDetailStory(it) }
+    }
+
+    override fun initUI() {
+        super.initUI()
+        with(binding) {
+            rvStories.adapter = adapter
+        }
+    }
+
+    override fun initObserver() {
+        super.initObserver()
+        collectLifecycleFlow(viewModel.allStories) {
+            when(it) {
+                is Resource.Error -> onGetAllStoriesFailed(it.message)
+                is Resource.Loading -> onGetAllStoriesLoading()
+                is Resource.Success -> onGetAllStoriesSuccess(it.data)
+            }
+        }
+    }
+
+    override fun onGetAllStoriesLoading() {
+        binding.msvStories.showLoadingLayout()
+    }
+
+    override fun onGetAllStoriesSuccess(data: List<Story>) {
+        with(binding) {
+            if (data.isNotEmpty()) {
+                msvStories.showDefaultLayout()
+                adapter.submitList(data)
+            } else {
+                msvStories.showEmptyLayout()
+            }
+        }
+    }
+
+    override fun onGetAllStoriesFailed(message: String) {
+        binding.msvStories.showEmptyLayout()
+        showToast(message)
+    }
+
+    override fun onNavigateToDetailStory(story: Story) {
+
     }
 
 }

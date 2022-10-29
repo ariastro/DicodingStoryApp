@@ -21,4 +21,6 @@ class AuthInteractor @Inject constructor(private val repo: DicodingStoryReposito
         repo.saveAuthToken(token)
     }
 
+    override fun getAuthToken(): Flow<String> = repo.getAuthToken()
+
 }

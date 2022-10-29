@@ -2,8 +2,6 @@ package io.astronout.dicodingstoryapp.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,6 +22,9 @@ import io.astronout.dicodingstoryapp.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun View.toVisible() {
     visibility = View.VISIBLE
@@ -40,10 +41,6 @@ fun View.toInvisible() {
 fun Fragment.showToast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
-
-fun wait(delay: Long = 300, action: () -> Unit) =
-    Handler(Looper.getMainLooper()).postDelayed(action, delay)
-
 
 fun Context.getColorResource(@ColorRes color: Int) = ContextCompat.getColor(this, color)
 fun Context.getColorStateListResource(@ColorRes color: Int) = ContextCompat.getColorStateList(this, color)
@@ -104,4 +101,10 @@ fun ImageView.setImageUrl(url: String) {
         .error(R.drawable.ic_placeholder)
         .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
         .into(this)
+}
+
+fun String.toDateString(): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val date = sdf.parse(this) as Date
+    return DateFormat.getDateInstance(DateFormat.FULL).format(date)
 }

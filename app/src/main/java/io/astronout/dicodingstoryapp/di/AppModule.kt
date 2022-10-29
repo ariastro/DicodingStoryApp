@@ -20,6 +20,8 @@ import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryApi
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryService
 import io.astronout.dicodingstoryapp.domain.AuthInteractor
 import io.astronout.dicodingstoryapp.domain.AuthUsecase
+import io.astronout.dicodingstoryapp.domain.StoryInteractor
+import io.astronout.dicodingstoryapp.domain.StoryUsecase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
@@ -87,6 +89,12 @@ class AppModule {
     @Singleton
     fun provideAuthUsecase(repo: DicodingStoryRepository): AuthUsecase {
         return AuthInteractor(repo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStoryUsecase(repo: DicodingStoryRepository): StoryUsecase {
+        return StoryInteractor(repo)
     }
 
 }

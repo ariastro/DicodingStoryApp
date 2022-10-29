@@ -60,7 +60,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), LoginContract {
     }
 
     override fun navigateToHomeScreen() {
-
+        navController?.navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
     }
 
 }
