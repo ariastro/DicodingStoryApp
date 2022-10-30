@@ -1,6 +1,5 @@
 package io.astronout.dicodingstoryapp.data.source
 
-import io.astronout.dicodingstoryapp.data.source.remote.model.AddNewStoryResponse
 import io.astronout.dicodingstoryapp.domain.model.Login
 import io.astronout.dicodingstoryapp.domain.model.Register
 import io.astronout.dicodingstoryapp.domain.model.Story
@@ -16,7 +15,7 @@ interface DicodingStoryRepository {
 
     fun getAllStories(): Flow<Resource<List<Story>>>
 
-    fun addNewStory(file: File, description: String): Flow<Resource<AddNewStoryResponse>>
+    fun addNewStory(file: File, description: String): Flow<Resource<Unit>>
 
     fun getAuthToken(): Flow<String>
 

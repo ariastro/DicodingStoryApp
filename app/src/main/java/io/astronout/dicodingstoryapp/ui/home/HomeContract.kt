@@ -4,6 +4,7 @@ import io.astronout.dicodingstoryapp.databinding.ItemStoryBinding
 import io.astronout.dicodingstoryapp.domain.model.Story
 
 interface HomeContract {
+    fun setupMenu()
     fun onGetAllStoriesLoading()
     fun onGetAllStoriesSuccess(data: List<Story>)
     fun onGetAllStoriesFailed(message: String)

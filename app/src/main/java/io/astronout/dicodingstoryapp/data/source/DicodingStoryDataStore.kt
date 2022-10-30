@@ -75,7 +75,7 @@ class DicodingStoryDataStore @Inject constructor(
         val requestDescription = description.toRequestBody("text/plain".toMediaType())
         api.addNewStory(imageMultipart, requestDescription).let {
             it.suspendOnSuccess {
-                emit(Resource.Success(data))
+                emit(Resource.Success(Unit))
             }.suspendOnError {
                 emit(Resource.Error(map(ErrorResponseMapper)?.message.orEmpty()))
             }.suspendOnException {

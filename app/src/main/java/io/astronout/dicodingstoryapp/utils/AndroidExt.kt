@@ -1,21 +1,33 @@
 package io.astronout.dicodingstoryapp.utils
 
+import android.content.ContentResolver
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Environment
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.kennyc.view.MultiStateView
 import io.astronout.dicodingstoryapp.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -95,4 +107,58 @@ fun String.toDateString(): String {
         e.printStackTrace()
         ""
     }
+}
+
+private val timeStamp =
+    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(System.currentTimeMillis())
+
+fun createNewTempFile(context: Context): File {
+    val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    return File.createTempFile(timeStamp, ".jpg", storageDir)
+}
+
+fun Uri.toFile(context: Context): File {
+    val contentResolver: ContentResolver = context.contentResolver
+    val myFile = createNewTempFile(context)
+
+    val inputStream = contentResolver.openInputStream(this) as InputStream
+    val outputStream = FileOutputStream(myFile)
+    val buf = ByteArray(1024)
+    var len: Int
+    while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+    outputStream.close()
+    inputStream.close()
+
+    return myFile
+}
+
+fun Bitmap.rotate(currentPhotoPath: String): Bitmap {
+    val exif = ExifInterface(currentPhotoPath)
+    val orientation = exif.getAttributeInt(
+        ExifInterface.TAG_ORIENTATION,
+        ExifInterface.ORIENTATION_UNDEFINED
+    )
+    return when (orientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> TransformationUtils.rotateImage(this, 90)
+        ExifInterface.ORIENTATION_ROTATE_180 -> TransformationUtils.rotateImage(this, 180)
+        ExifInterface.ORIENTATION_ROTATE_270 -> TransformationUtils.rotateImage(this, 270)
+        ExifInterface.ORIENTATION_NORMAL -> this
+        else -> this
+    }
+}
+
+fun File.compress(): File {
+    val bitmap = BitmapFactory.decodeFile(this.path)
+    var compressQuality = 100
+    var streamLength: Int
+    do {
+        val bmpStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+        val bmpPicByteArray = bmpStream.toByteArray()
+        streamLength = bmpPicByteArray.size
+        compressQuality -= 5
+    } while (streamLength > 1000000)
+
+    bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(this))
+    return this
 }

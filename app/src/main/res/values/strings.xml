@@ -23,4 +23,13 @@
     <string name="label_no_data_illustration">No Data Illustration</string>
     <string name="label_no_data_found">No Data Found!</string>
     <string name="label_detail_story">Detail Story</string>
+    <string name="label_select_image">Select image from</string>
+    <string name="label_camera">Camera</string>
+    <string name="label_gallery">Gallery</string>
+    <string name="label_description">Description</string>
+    <string name="error_empty_image">Upload image first!</string>
+    <string name="error_empty_description">Description must not be empty</string>
+    <string name="label_story_uploaded">Story Uploaded</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_language_setting">Language Setting</string>
 </resources>
