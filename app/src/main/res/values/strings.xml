@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Dicoding Stories</string>
-    <string name="label_email">Email</string>
+    <string name="app_name" translatable="false">Dicoding Stories</string>
+    <string name="label_email" translatable="false">Email</string>
     <string name="error_email_not_valid">Email address is not valid</string>
     <string name="label_password">Password</string>
     <string name="error_password_not_valid">Passwords must be at least 6 characters</string>
-    <string name="label_login">Login</string>
+    <string name="label_login" translatable="false">Login</string>
     <string name="label_login_subtitle">Share you learning experience with other students</string>
     <string name="label_doesnt_have_account">Doesn\'t have account?</string>
     <string name="label_register_now">Register now!</string>
@@ -32,4 +32,7 @@
     <string name="label_story_uploaded">Story Uploaded</string>
     <string name="label_logout">Logout</string>
     <string name="label_language_setting">Language Setting</string>
+    <string name="label_user_story">%s\'s story</string>
+    <string name="stories_stack">Stories</string>
+    <string name="app_widget_description">Widget dicoding stories</string>
 </resources>

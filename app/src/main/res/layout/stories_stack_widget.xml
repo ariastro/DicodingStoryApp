@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <StackView
+            android:id="@+id/svStories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:loopViews="true" />
+
+        <TextView
+            android:id="@+id/tvBannerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/dark"
+            android:padding="8dp"
+            android:text="@string/stories_stack"
+            android:textAlignment="center"
+            android:textAppearance="@style/StoryAppTypographyStyles.Body1.Bold"
+            android:textColor="@color/light" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/dark"
+        android:text="@string/label_no_data_found"
+        android:textAlignment="center"
+        android:textAppearance="@style/StoryAppTypographyStyles.Body1.Bold"
+        android:textColor="@color/light"
+        android:visibility="gone" />
+
+</FrameLayout>
