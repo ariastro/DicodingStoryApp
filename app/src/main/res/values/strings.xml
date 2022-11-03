@@ -35,4 +35,5 @@
     <string name="label_user_story">%s\'s story</string>
     <string name="stories_stack">Stories</string>
     <string name="app_widget_description">Widget dicoding stories</string>
+    <string name="label_unable_to_acquire_permission">Failed to acquire permission. Please activate manually!</string>
 </resources>

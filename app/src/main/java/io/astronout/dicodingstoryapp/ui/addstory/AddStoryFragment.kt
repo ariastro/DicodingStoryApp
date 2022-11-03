@@ -1,12 +1,15 @@
 package io.astronout.dicodingstoryapp.ui.addstory
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.provider.MediaStore
 import android.viewbinding.library.fragment.viewBinding
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -39,7 +42,11 @@ class AddStoryFragment : BaseFragment(R.layout.fragment_add_story), AddStoryCont
         super.initAction()
         with(binding) {
             btnCamera.setOnClickListener {
-                onOpenCamera()
+                if (isPermissionGranted()) {
+                    onOpenCamera()
+                } else {
+                    requestPermission()
+                }
             }
             btnGallery.setOnClickListener {
                 onOpenGallery()
@@ -54,6 +61,14 @@ class AddStoryFragment : BaseFragment(R.layout.fragment_add_story), AddStoryCont
                 }
             }
         }
+    }
+
+    private fun isPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermission() {
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
 
     override fun onOpenGallery() {
@@ -120,6 +135,16 @@ class AddStoryFragment : BaseFragment(R.layout.fragment_add_story), AddStoryCont
             }
 
             binding.ivStoryImage.setImageBitmap(rotatedBitmap)
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            onOpenCamera()
+        } else {
+            showToast(getString(R.string.label_unable_to_acquire_permission))
         }
     }
 
