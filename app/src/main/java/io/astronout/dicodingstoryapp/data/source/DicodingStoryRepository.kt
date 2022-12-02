@@ -1,5 +1,7 @@
 package io.astronout.dicodingstoryapp.data.source
 
+import androidx.paging.PagingData
+import io.astronout.dicodingstoryapp.data.source.local.entity.StoryEntity
 import io.astronout.dicodingstoryapp.domain.model.Login
 import io.astronout.dicodingstoryapp.domain.model.Register
 import io.astronout.dicodingstoryapp.domain.model.Story
@@ -13,7 +15,9 @@ interface DicodingStoryRepository {
 
     fun register(name: String, email: String, password: String): Flow<Resource<Register>>
 
-    fun getAllStories(): Flow<Resource<List<Story>>>
+    fun getStories(): Flow<Resource<List<Story>>>
+
+    fun getAllStories(): Flow<PagingData<StoryEntity>>
 
     fun addNewStory(file: File, description: String): Flow<Resource<Unit>>
 

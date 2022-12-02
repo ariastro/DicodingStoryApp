@@ -2,9 +2,9 @@ package io.astronout.dicodingstoryapp.data.source.remote.web
 
 import com.skydoves.sandwich.ApiResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.AddNewStoryResponse
-import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.LoginResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.RegisterResponse
+import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -29,7 +29,8 @@ interface DicodingStoryService {
     @GET("stories")
     suspend fun getAllStories(
         @Query("page") page: Int? = null,
-        @Query("size") size: Int? = null
+        @Query("size") size: Int? = null,
+        @Query("location") location: Int? = null
     ): ApiResponse<StoriesResponse>
 
     @Multipart

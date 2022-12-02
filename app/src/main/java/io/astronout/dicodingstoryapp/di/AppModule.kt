@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.paging.ExperimentalPagingApi
+import androidx.room.Room
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -15,6 +17,7 @@ import io.astronout.dicodingstoryapp.data.source.DicodingStoryDataStore
 import io.astronout.dicodingstoryapp.data.source.DicodingStoryRepository
 import io.astronout.dicodingstoryapp.data.source.local.LocalDataSource
 import io.astronout.dicodingstoryapp.data.source.local.LocalDataSourceImpl
+import io.astronout.dicodingstoryapp.data.source.local.room.DicodingStoryDatabase
 import io.astronout.dicodingstoryapp.data.source.remote.AuthInterceptor
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryApi
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryService
@@ -30,6 +33,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+@OptIn(ExperimentalPagingApi::class)
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
@@ -43,7 +47,17 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideLocalDataSource(dataStore: DataStore<Preferences>): LocalDataSource = LocalDataSourceImpl(dataStore)
+    fun provideStoryDatabase(@ApplicationContext context: Context): DicodingStoryDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            DicodingStoryDatabase::class.java,
+            "dicoding_story_database"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(dataStore: DataStore<Preferences>, database: DicodingStoryDatabase): LocalDataSource = LocalDataSourceImpl(dataStore, database)
 
     @Provides
     @Singleton

@@ -1,10 +1,16 @@
 package io.astronout.dicodingstoryapp.data.source
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.skydoves.sandwich.map
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import io.astronout.dicodingstoryapp.data.source.local.LocalDataSource
+import io.astronout.dicodingstoryapp.data.source.local.entity.StoryEntity
+import io.astronout.dicodingstoryapp.data.source.remote.DicodingStoryRemoteMediator
 import io.astronout.dicodingstoryapp.data.source.remote.ErrorResponseMapper
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryApi
 import io.astronout.dicodingstoryapp.vo.Resource
@@ -21,6 +27,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import javax.inject.Inject
 
+@ExperimentalPagingApi
 class DicodingStoryDataStore @Inject constructor(
     private val api: DicodingStoryApi,
     private val localDataSource: LocalDataSource,
@@ -55,7 +62,20 @@ class DicodingStoryDataStore @Inject constructor(
         }
     }.onStart { emit(Resource.Loading) }.flowOn(ioDispatcher)
 
-    override fun getAllStories() = flow {
+    override fun getAllStories(): Flow<PagingData<StoryEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE,),
+            remoteMediator = DicodingStoryRemoteMediator(
+                api,
+                localDataSource
+            ),
+            pagingSourceFactory = {
+                localDataSource.getAllStories()
+            }
+        ).flow
+    }
+
+    override fun getStories() = flow {
         api.getAllStories().let {
             it.suspendOnSuccess {
                 emit(Resource.Success(data.listStory?.map { data ->
@@ -88,6 +108,10 @@ class DicodingStoryDataStore @Inject constructor(
 
     override suspend fun saveAuthToken(token: String) {
         localDataSource.saveAuthToken(token)
+    }
+
+    companion object {
+        const val NETWORK_PAGE_SIZE = 10
     }
 
 }

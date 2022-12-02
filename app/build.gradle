@@ -108,6 +108,7 @@ dependencies {
     // coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
@@ -133,6 +134,26 @@ dependencies {
     // Data Store
     implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
     implementation "androidx.datastore:datastore-preferences-core:$dataStoreVersion"
+
+    // Location
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // Paging3
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+
+    // IdlingResource
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.5.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.0'
+
+    // Mockito
+    testImplementation 'org.mockito:mockito-core:4.6.1'
+    testImplementation 'org.mockito:mockito-inline:3.12.4'
+
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    // MockWebServer
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
+    androidTestImplementation "com.squareup.okhttp3:okhttp-tls:4.9.3"
 }
 
 kapt {

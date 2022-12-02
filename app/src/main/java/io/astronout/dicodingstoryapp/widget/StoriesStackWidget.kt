@@ -80,7 +80,7 @@ class StoriesStackWidget : AppWidgetProvider() {
     ) {
         getAllStoriesJob?.cancel()
         getAllStoriesJob = coroutineScope.launch {
-            storyUsecase.getAllStories().collect {
+            storyUsecase.getStories().collect {
                 when (it) {
                     is Resource.Success -> {
                         Intent(StoriesStackRemoteViewsFactory.ACTION_UPDATE_STORIES).apply {

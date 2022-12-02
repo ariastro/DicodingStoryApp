@@ -2,9 +2,9 @@ package io.astronout.dicodingstoryapp.data.source.remote.web
 
 import com.skydoves.sandwich.ApiResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.AddNewStoryResponse
-import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.LoginResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.RegisterResponse
+import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -19,8 +19,8 @@ class DicodingStoryApi @Inject constructor(private val dicodingStoryService: Dic
         return dicodingStoryService.register(name, email, password)
     }
 
-    override suspend fun getAllStories(page: Int?, size: Int?): ApiResponse<StoriesResponse> {
-        return dicodingStoryService.getAllStories(page, size)
+    override suspend fun getAllStories(page: Int?, size: Int?, location: Int?): ApiResponse<StoriesResponse> {
+        return dicodingStoryService.getAllStories(page, size, location)
     }
 
     override suspend fun addNewStory(

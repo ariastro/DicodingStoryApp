@@ -2,6 +2,7 @@ package io.astronout.dicodingstoryapp.data.source.remote.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.astronout.dicodingstoryapp.data.source.local.entity.StoryEntity
 import io.astronout.dicodingstoryapp.domain.model.Story
 
 @JsonClass(generateAdapter = true)
@@ -39,6 +40,17 @@ data class StoriesResponse(
                 lon = lon ?: 0.0,
                 name = name.orEmpty(),
                 photoUrl = photoUrl.orEmpty()
+            )
+        }
+        fun toStoryEntity(): StoryEntity {
+            return StoryEntity(
+                id = id.orEmpty(),
+                name = name.orEmpty(),
+                description = description.orEmpty(),
+                createdAt = createdAt.orEmpty(),
+                photoUrl = photoUrl.orEmpty(),
+                lat = lat ?: 0.0,
+                lon = lon ?: 0.0
             )
         }
     }

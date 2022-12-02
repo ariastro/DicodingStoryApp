@@ -2,15 +2,15 @@ package io.astronout.dicodingstoryapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.astronout.dicodingstoryapp.databinding.ItemStoryBinding
 import io.astronout.dicodingstoryapp.domain.model.Story
 import io.astronout.dicodingstoryapp.utils.setImageUrl
 import io.astronout.dicodingstoryapp.utils.toDateString
 
-class StoryAdapter(private val onStoryClicked: (Story, ItemStoryBinding) -> Unit): ListAdapter<Story, StoryAdapter.ViewHolder>(
+class StoryAdapter(private val onStoryClicked: (Story, ItemStoryBinding) -> Unit): PagingDataAdapter<Story, StoryAdapter.ViewHolder>(
     DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,7 +18,9 @@ class StoryAdapter(private val onStoryClicked: (Story, ItemStoryBinding) -> Unit
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     inner class ViewHolder(private val itemStoryBinding: ItemStoryBinding): RecyclerView.ViewHolder(itemStoryBinding.root) {

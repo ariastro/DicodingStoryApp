@@ -36,4 +36,6 @@
     <string name="stories_stack">Stories</string>
     <string name="app_widget_description">Widget dicoding stories</string>
     <string name="label_unable_to_acquire_permission">Failed to acquire permission. Please activate manually!</string>
+    <string name="label_retry">Retry</string>
+    <string name="loading_error_message">Unable to fetch data</string>
 </resources>

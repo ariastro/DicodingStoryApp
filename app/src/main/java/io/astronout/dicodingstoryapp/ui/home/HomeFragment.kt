@@ -14,13 +14,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import io.astronout.dicodingstoryapp.R
 import io.astronout.dicodingstoryapp.databinding.FragmentHomeBinding
 import io.astronout.dicodingstoryapp.databinding.ItemStoryBinding
 import io.astronout.dicodingstoryapp.domain.model.Story
 import io.astronout.dicodingstoryapp.ui.base.BaseFragment
-import io.astronout.dicodingstoryapp.utils.*
-import io.astronout.dicodingstoryapp.vo.Resource
+import io.astronout.dicodingstoryapp.utils.showDefaultLayout
+import io.astronout.dicodingstoryapp.utils.showEmptyLayout
+import io.astronout.dicodingstoryapp.utils.showLoadingLayout
+import io.astronout.dicodingstoryapp.utils.showToast
 
 class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuProvider {
 
@@ -50,14 +54,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
         setupMenu()
     }
 
-    override fun initObserver() {
-        super.initObserver()
-        collectLifecycleFlow(viewModel.allStories) {
-            when(it) {
-                is Resource.Error -> onGetAllStoriesFailed(it.message)
-                is Resource.Loading -> onGetAllStoriesLoading()
-                is Resource.Success -> onGetAllStoriesSuccess(it.data)
-            }
+    override fun initData() {
+        super.initData()
+        viewModel.allStories.observe(viewLifecycleOwner) {
+            onGetAllStoriesSuccess(it)
         }
     }
 
@@ -65,6 +65,25 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
         super.initAction()
         binding.fabCreateStory.setOnClickListener {
             navController?.navigate(HomeFragmentDirections.actionHomeFragmentToAddStoryFragment())
+        }
+    }
+
+    override fun setupAdapter() {
+        with(binding) {
+            adapter.addLoadStateListener { loadState ->
+                if ((loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && adapter.itemCount < 1) || loadState.source.refresh is LoadState.Error) {
+                    msvStories.showEmptyLayout()
+                } else {
+                    msvStories.showDefaultLayout()
+                }
+            }
+            runCatching {
+                rvStories.adapter = adapter.withLoadStateFooter(
+                    footer = LoadingStateAdapter {
+                        adapter.retry()
+                    }
+                )
+            }
         }
     }
 
@@ -77,14 +96,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
         binding.msvStories.showLoadingLayout()
     }
 
-    override fun onGetAllStoriesSuccess(data: List<Story>) {
+    override fun onGetAllStoriesSuccess(data: PagingData<Story>) {
         with(binding) {
-            if (data.isNotEmpty()) {
-                msvStories.showDefaultLayout()
-                adapter.submitList(data)
-            } else {
-                msvStories.showEmptyLayout()
-            }
+            val recyclerViewState = rvStories.layoutManager?.onSaveInstanceState()
+            adapter.submitData(lifecycle, data)
+            rvStories.layoutManager?.onRestoreInstanceState(recyclerViewState)
         }
     }
 
@@ -98,7 +114,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
             val extras = FragmentNavigatorExtras(
                 ivStoryImage to story.id,
             )
-            navController?.navigate(HomeFragmentDirections.actionHomeFragmentToDetailStoryFragment(story), extras)
+            navController?.navigate(
+                HomeFragmentDirections.actionHomeFragmentToDetailStoryFragment(
+                    story
+                ), extras
+            )
         }
     }
 
