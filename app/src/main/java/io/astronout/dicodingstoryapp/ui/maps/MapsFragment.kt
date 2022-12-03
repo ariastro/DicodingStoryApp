@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.viewbinding.library.fragment.viewBinding
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -44,6 +45,9 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps) {
 
     override fun initUI() {
         super.initUI()
+        val activity = activity as AppCompatActivity
+        activity.setSupportActionBar(binding.toolbar)
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val mapFragment = childFragmentManager.findFragmentById(binding.map.id) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())

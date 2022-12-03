@@ -9,6 +9,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AddStoryViewModel @Inject constructor(private val storyUsecase: StoryUsecase) : ViewModel() {
 
-    fun addNewStory(file: File, description: String) = storyUsecase.addNewStory(file, description)
+    fun addNewStory(file: File, description: String, lat: String?, lon: String?) = storyUsecase.addNewStory(file, description, lat, lon)
 
 }

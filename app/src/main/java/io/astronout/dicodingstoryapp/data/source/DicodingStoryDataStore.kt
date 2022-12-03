@@ -89,11 +89,13 @@ class DicodingStoryDataStore @Inject constructor(
         }
     }.onStart { emit(Resource.Loading) }.flowOn(ioDispatcher)
 
-    override fun addNewStory(file: File, description: String) = flow {
+    override fun addNewStory(file: File, description: String, lat: String?, lon: String?) = flow {
         val requestImage = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart = MultipartBody.Part.createFormData("photo", file.name, requestImage)
         val requestDescription = description.toRequestBody("text/plain".toMediaType())
-        api.addNewStory(imageMultipart, requestDescription).let {
+        val requestLat = lat?.toRequestBody("text/plain".toMediaType())
+        val requestLon = lon?.toRequestBody("text/plain".toMediaType())
+        api.addNewStory(imageMultipart, requestDescription, requestLat, requestLon).let {
             it.suspendOnSuccess {
                 emit(Resource.Success(Unit))
             }.suspendOnError {

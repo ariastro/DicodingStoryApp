@@ -5,11 +5,10 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.suspendOnSuccess
 import io.astronout.dicodingstoryapp.data.source.local.LocalDataSource
 import io.astronout.dicodingstoryapp.data.source.local.entity.RemoteKeys
 import io.astronout.dicodingstoryapp.data.source.local.entity.StoryEntity
-import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
 import io.astronout.dicodingstoryapp.data.source.remote.web.DicodingStoryApi
 
 @ExperimentalPagingApi
@@ -30,44 +29,44 @@ class DicodingStoryRemoteMediator(
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
-                remoteKeys?.prevKey ?: return MediatorResult.Success(
+                val prevKey = remoteKeys?.prevKey ?: return MediatorResult.Success(
                     endOfPaginationReached = remoteKeys != null
                 )
+                prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeysForLastItem(state)
-                remoteKeys?.nextKey ?: return MediatorResult.Success(
+                val nextKey = remoteKeys?.nextKey ?: return MediatorResult.Success(
                     endOfPaginationReached = remoteKeys != null
                 )
+                nextKey
             }
         }
 
         try {
             val responseData = api.getAllStories(page, state.config.pageSize)
             var endOfPaginationReached = false
-            var stories: List<StoriesResponse.StoryResponse>? = null
-            responseData.onSuccess {
-                stories = response.body()?.listStory
+            responseData.suspendOnSuccess {
+                val stories = response.body()?.listStory
                 endOfPaginationReached = stories.isNullOrEmpty()
-            }
+                localDataSource.getDatabase().withTransaction {
+                    if (loadType == LoadType.REFRESH) {
+                        localDataSource.clearRemoteKeys()
+                        localDataSource.clearStories()
+                    }
 
-            localDataSource.getDatabase().withTransaction {
-                if (loadType == LoadType.REFRESH) {
-                    localDataSource.clearRemoteKeys()
-                    localDataSource.clearStories()
-                }
+                    val prevKey = if (page == 1) null else page - 1
+                    val nextKey = if (endOfPaginationReached) null else page + 1
+                    val keys = stories?.map {
+                        RemoteKeys(id = it.id.orEmpty(), prevKey = prevKey, nextKey = nextKey)
+                    }
 
-                val prevKey = if (page == 1) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
-                val keys = stories?.map {
-                    RemoteKeys(id = it.id.orEmpty(), prevKey = prevKey, nextKey = nextKey)
-                }
-
-                keys?.let {
-                    localDataSource.insertRemoteKeys(it)
-                }
-                stories?.map { it.toStoryEntity() }?.let {
-                    localDataSource.insertStories(it)
+                    keys?.let {
+                        localDataSource.insertRemoteKeys(it)
+                    }
+                    stories?.map { it.toStoryEntity() }?.let {
+                        localDataSource.insertStories(it)
+                    }
                 }
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)

@@ -22,8 +22,8 @@ class StoryInteractor @Inject constructor(private val repo: DicodingStoryReposit
         }
     }
 
-    override fun addNewStory(file: File, description: String): Flow<Resource<Unit>> {
-        return repo.addNewStory(file, description)
+    override fun addNewStory(file: File, description: String, lat: String?, lon: String?): Flow<Resource<Unit>> {
+        return repo.addNewStory(file, description, lat, lon)
     }
 
 }

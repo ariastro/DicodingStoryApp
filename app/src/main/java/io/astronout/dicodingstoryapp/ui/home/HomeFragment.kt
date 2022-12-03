@@ -42,7 +42,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
         with(binding) {
             val activity = activity as AppCompatActivity
             activity.setSupportActionBar(binding.toolbar)
-            rvStories.adapter = adapter
             rvStories.apply {
                 postponeEnterTransition()
                 viewTreeObserver.addOnPreDrawListener {
@@ -51,20 +50,31 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
                 }
             }
         }
+        setupAdapter()
         setupMenu()
     }
 
     override fun initData() {
         super.initData()
-        viewModel.allStories.observe(viewLifecycleOwner) {
-            onGetAllStoriesSuccess(it)
-        }
+        fetchAllStories()
     }
 
     override fun initAction() {
         super.initAction()
-        binding.fabCreateStory.setOnClickListener {
-            navController?.navigate(HomeFragmentDirections.actionHomeFragmentToAddStoryFragment())
+        with(binding) {
+            fabCreateStory.setOnClickListener {
+                navController?.navigate(HomeFragmentDirections.actionHomeFragmentToAddStoryFragment())
+            }
+            swRefreshLayout.setOnRefreshListener {
+                adapter.refresh()
+                swRefreshLayout.isRefreshing = false
+            }
+        }
+    }
+
+    override fun fetchAllStories() {
+        viewModel.allStories.observe(viewLifecycleOwner) {
+            onGetAllStoriesSuccess(it)
         }
     }
 

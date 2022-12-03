@@ -11,5 +11,5 @@ interface StoryUsecase {
     fun getStories(): Flow<Resource<List<Story>>>
     fun getAllStories(): Flow<PagingData<Story>>
 
-    fun addNewStory(file: File, description: String): Flow<Resource<Unit>>
+    fun addNewStory(file: File, description: String, lat: String? = null, lon: String? = null): Flow<Resource<Unit>>
 }

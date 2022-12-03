@@ -39,4 +39,5 @@
     <string name="label_maps">Peta</string>
     <string name="label_location">Lokasi</string>
     <string name="label_activate_location_message">Aktifkan layanan lokasi anda</string>
+    <string name="label_share_location">Bagikan Lokasi</string>
 </resources>

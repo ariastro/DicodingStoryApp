@@ -4,4 +4,5 @@ interface AddStoryContract {
     fun onOpenGallery()
     fun onOpenCamera()
     fun uploadStory()
+    fun getLastLocation()
 }

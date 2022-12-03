@@ -103,15 +103,26 @@
         app:layout_constraintStart_toStartOf="@id/cvImage"
         app:layout_constraintTop_toBottomOf="@id/btnCamera" />
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/swLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_share_location"
+        android:textAppearance="@style/StoryAppTypographyStyles.Body1"
+        app:layout_constraintEnd_toEndOf="@id/cvImage"
+        app:layout_constraintStart_toStartOf="@id/cvImage"
+        app:layout_constraintTop_toBottomOf="@id/etDescription" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreateStory"
         style="@style/StoryApp.Button"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/label_create_a_story"
-        app:layout_constraintEnd_toEndOf="@id/cvImage"
-        app:layout_constraintStart_toStartOf="@id/cvImage"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"/>
+        app:layout_constraintEnd_toEndOf="@id/cvImage"
+        app:layout_constraintStart_toStartOf="@id/cvImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

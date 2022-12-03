@@ -19,7 +19,7 @@ interface DicodingStoryRepository {
 
     fun getAllStories(): Flow<PagingData<StoryEntity>>
 
-    fun addNewStory(file: File, description: String): Flow<Resource<Unit>>
+    fun addNewStory(file: File, description: String, lat: String?, lon: String?): Flow<Resource<Unit>>
 
     fun getAuthToken(): Flow<String>
 

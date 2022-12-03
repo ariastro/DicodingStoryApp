@@ -25,9 +25,11 @@ class DicodingStoryApi @Inject constructor(private val dicodingStoryService: Dic
 
     override suspend fun addNewStory(
         file: MultipartBody.Part,
-        description: RequestBody
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
     ): ApiResponse<AddNewStoryResponse> {
-        return dicodingStoryService.addNewStory(file, description)
+        return dicodingStoryService.addNewStory(file, description, lat, lon)
     }
 
 }

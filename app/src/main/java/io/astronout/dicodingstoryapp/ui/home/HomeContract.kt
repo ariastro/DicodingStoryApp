@@ -7,6 +7,7 @@ import io.astronout.dicodingstoryapp.domain.model.Story
 interface HomeContract {
     fun setupAdapter()
     fun setupMenu()
+    fun fetchAllStories()
     fun onGetAllStoriesLoading()
     fun onGetAllStoriesSuccess(data: PagingData<Story>)
     fun onGetAllStoriesFailed(message: String)
