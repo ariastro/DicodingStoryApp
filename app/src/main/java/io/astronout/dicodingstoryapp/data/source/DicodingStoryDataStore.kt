@@ -76,7 +76,7 @@ class DicodingStoryDataStore @Inject constructor(
     }
 
     override fun getStories() = flow {
-        api.getAllStories().let {
+        api.getAllStories(size = 30, location = 1).let {
             it.suspendOnSuccess {
                 emit(Resource.Success(data.listStory?.map { data ->
                     data.toStory()

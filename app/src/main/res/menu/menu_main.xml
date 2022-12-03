@@ -2,14 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_maps"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="@string/label_maps"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_setting"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/label_language_setting"
-        app:showAsAction="always" />
+        android:title="@string/label_language_setting" />
     <item
         android:id="@+id/menu_logout"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
-        android:title="@string/label_logout"
-        app:showAsAction="ifRoom" />
+        android:title="@string/label_logout"/>
 
 </menu>

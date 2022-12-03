@@ -36,4 +36,7 @@
     <string name="label_unable_to_acquire_permission">Izin ditolak. Mohon aktifkan secara manual!</string>
     <string name="label_retry">Coba Lagi</string>
     <string name="loading_error_message">Gagal memuat data</string>
+    <string name="label_maps">Peta</string>
+    <string name="label_location">Lokasi</string>
+    <string name="label_activate_location_message">Aktifkan layanan lokasi anda</string>
 </resources>

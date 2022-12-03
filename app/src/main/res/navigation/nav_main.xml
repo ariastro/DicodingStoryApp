@@ -80,6 +80,13 @@
 			app:popExitAnim="@anim/anim_slide_out_right"
 			app:popUpTo="@id/homeFragment"
 			app:popUpToInclusive="true"/>
+		<action
+			android:id="@+id/action_homeFragment_to_mapsFragment"
+			app:destination="@id/mapsFragment"
+			app:enterAnim="@anim/anim_slide_in_right"
+			app:exitAnim="@anim/anim_slide_out_left"
+			app:popEnterAnim="@anim/anim_slide_in_left"
+			app:popExitAnim="@anim/anim_slide_out_right" />
 	</fragment>
 	<fragment
 		android:id="@+id/detailStoryFragment"
@@ -95,5 +102,10 @@
 		android:name="io.astronout.dicodingstoryapp.ui.addstory.AddStoryFragment"
 		android:label="fragment_add_story"
 		tools:layout="@layout/fragment_add_story" />
+	<fragment
+		android:id="@+id/mapsFragment"
+		android:name="io.astronout.dicodingstoryapp.ui.maps.MapsFragment"
+		android:label="MapsFragment"
+		tools:layout="@layout/fragment_maps" />
 
 </navigation>

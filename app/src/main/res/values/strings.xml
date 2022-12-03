@@ -38,4 +38,7 @@
     <string name="label_unable_to_acquire_permission">Failed to acquire permission. Please activate manually!</string>
     <string name="label_retry">Retry</string>
     <string name="loading_error_message">Unable to fetch data</string>
+    <string name="label_maps">Maps</string>
+    <string name="label_location">Location</string>
+    <string name="label_activate_location_message">Please activate your location services</string>
 </resources>

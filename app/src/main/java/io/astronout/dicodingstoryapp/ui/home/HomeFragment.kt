@@ -128,6 +128,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
+            R.id.menu_maps -> {
+                navController?.navigate(HomeFragmentDirections.actionHomeFragmentToMapsFragment())
+                true
+            }
             R.id.menu_logout -> {
                 viewModel.clearToken()
                 navController?.navigate(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
