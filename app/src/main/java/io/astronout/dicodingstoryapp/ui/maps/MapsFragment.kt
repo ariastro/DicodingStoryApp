@@ -65,7 +65,7 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps) {
     }
 
     private fun fetchStories() {
-        collectLifecycleFlow(viewModel.allStories) {
+        collectLifecycleFlow(viewModel.allStories()) {
             when (it) {
                 is Resource.Error -> onFetchStoriesFailed(it.message)
                 is Resource.Loading -> {}

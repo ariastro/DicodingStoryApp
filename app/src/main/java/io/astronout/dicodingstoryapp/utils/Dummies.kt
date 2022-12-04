@@ -1,13 +1,9 @@
 package io.astronout.dicodingstoryapp.utils
 
-import io.astronout.dicodingstoryapp.data.source.remote.model.AddNewStoryResponse
 import io.astronout.dicodingstoryapp.data.source.remote.model.StoriesResponse
 import io.astronout.dicodingstoryapp.domain.model.Login
 import io.astronout.dicodingstoryapp.domain.model.Register
 import io.astronout.dicodingstoryapp.domain.model.Story
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 
 object Dummies {
     fun generateDummyStoriesResponse(): StoriesResponse {
@@ -66,23 +62,6 @@ object Dummies {
 
     fun generateDummyRegister(): Register {
         return Register(
-            error = false,
-            message = "success"
-        )
-    }
-
-    fun generateDummyMultipartFile(): MultipartBody.Part {
-        val dummyText = "text"
-        return MultipartBody.Part.create(dummyText.toRequestBody())
-    }
-
-    fun generateDummyRequestBody(): RequestBody {
-        val dummyText = "text"
-        return dummyText.toRequestBody()
-    }
-
-    fun generateDummyAddNewStoryResponse(): AddNewStoryResponse {
-        return AddNewStoryResponse(
             error = false,
             message = "success"
         )

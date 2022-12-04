@@ -8,6 +8,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MapsViewModel @Inject constructor(private val storyUsecase: StoryUsecase) : ViewModel() {
 
-    val allStories = storyUsecase.getStories()
+    fun allStories() = storyUsecase.getStories()
 
 }
