@@ -72,6 +72,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), HomeContract, MenuPro
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.refresh()
+    }
+
     override fun fetchAllStories() {
         viewModel.allStories.observe(viewLifecycleOwner) {
             onGetAllStoriesSuccess(it)

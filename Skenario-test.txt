@@ -1,0 +1,83 @@
+Unit Test
+
+1. MapsViewModel
+
+	a. Ketika berhasil memuat data
+		- Memastikan balikan response bernilai Resource.Success
+		- Memastikan balikan response tidak bernilai Resource.Error
+		- Memastikan data response tidak null
+		- Memastikan data response sama dengan dummyStoriesResponse
+		- Memastikan method storyUsecase.getStories telah dipanggil
+
+	b. Ketika gagal memuat data
+		- Memastikan balikan response tidak bernilai Resource.Success
+ 		- Memastikan balikan response bernilai Resource.Error
+		- Memastikan message tidak null
+		- Memastikan method storyUsecase.getStories telah dipanggil
+
+2. LoginViewModel
+
+	a. Ketika berhasil login
+		- Memastikan balikan response bernilai Resource.Success
+		- Memastikan balikan response tidak bernilai Resource.Error
+		- Memastikan data response tidak null
+		- Memastikan data response sama dengan expectedResponse
+		- Memastikan bahwa method authUsecase.login telah dipanggil
+
+	b. Ketika gagal login
+		- Memastikan balikan response tidak bernilai Resource.Success
+ 		- Memastikan balikan response bernilai Resource.Error
+		- Memastikan bahwa message tidak null
+		- Memastikan bahwa method authUsecase.login telah dipanggil
+
+	c. Ketika menyimpan token authenticaiton
+		- Memastikan bahwa method authUsecase.saveAuthToken telah dipanggil
+
+3. RegisterViewModel
+
+	a. Ketika Register Berhasil
+		- Memastikan balikan response tidak bernilai Resource.Success
+ 		- Memastikan balikan response bernilai Resource.Error
+		- Memastikan bahwa response tidak null
+		- Memastikan bahwa response sama dengan dummyRegisterResponse
+		- Memastikan bahwa method authUsecase.register telah dipanggil
+
+	b. Ketika Register Gagal
+		- Memastikan balikan response tidak bernilai Resource.Success
+ 		- Memastikan balikan response bernilai Resource.Error
+		- Memastikan bahwa message tidak null
+
+
+4. AddStoryViewModel
+
+	a. Ketika Berhasil Mengupload File
+		- Memastikan balikan response tidak bernilai Resource.Success
+ 		- Memastikan balikan response bernilai Resource.Error
+		- Memastikan bahwa response tidak null
+		- Memastikan bahwa response sama dengan Unit
+
+	b. Ketika Gagal Mengupload File
+		- Memastikan balikan response tidak bernilai Resource.Success
+ 		- Memastikan balikan response bernilai Resource.Error
+		- Memastikan bahwa message tidak null
+
+5. SplashViewModel
+
+	a. Ketika Berhasil Mendapatkan Token
+		- Memastikan bahwa token tidak null
+		- Memastikan bahwa token sama dengan dummyToken
+		- Memastikan bahwa method authUsecase.getAuthToken telah dipanggil
+
+	b. Ketika Berhasil Mendapatkan Token tetapi Token Kosong
+		- Memastikan bahwa actualToken bernilai kosong
+		- Memastikan bahwa method authUsecase.getAuthToken telah dipanggil
+
+6. HomeViewModel
+
+	a. Ketika Berhasil Mendapatkan Story
+		- Memastikan bahwa method storyUsecase.getAllStories telah dipanggil
+		- Memastikan bahwa nilai data story tidak null
+		- Memastikan ukuran data asli dengan data dummy sama
+
+	b. Ketika Menghapus auth token
+		- Memastikan bahwa method authUsecase.saveAuthToken telah dipanggil
