@@ -1,7 +1,6 @@
 package io.astronout.dicodingstoryapp.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.asLiveData
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.ListUpdateCallback
@@ -16,6 +15,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,19 +38,21 @@ class HomeViewModelTest {
     private lateinit var storyUsecase: StoryUsecase
     @Mock
     private lateinit var authUsecase: AuthUsecase
+    private lateinit var viewModel: HomeViewModel
+
+    private val dummyStories = Dummies.generateDummyListStory()
+
+    @Before
+    fun setUp() {
+        val data = PagedTestDataSource.snapshot(dummyStories)
+        val stories = flow { emit(data) }
+        Mockito.`when`(storyUsecase.getAllStories()).thenReturn(stories)
+        viewModel = HomeViewModel(storyUsecase, authUsecase)
+    }
 
     @Test
     fun `Get all stories successfully`() = runTest {
-        val dummyStories = Dummies.generateDummyListStory()
-        val data = PagedTestDataSource.snapshot(dummyStories)
-
-        val stories = flow {
-            emit(data)
-        }
-
-        Mockito.`when`(storyUsecase.getAllStories()).thenReturn(stories)
-
-        val actualStories = storyUsecase.getAllStories().asLiveData().getOrAwaitValue()
+        val actualStories = viewModel.allStories.getOrAwaitValue()
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,
             updateCallback = noopListUpdateCallback,
@@ -75,7 +77,7 @@ class HomeViewModelTest {
 
     @Test
     fun `Clear auth token`(): Unit = runTest {
-        authUsecase.saveAuthToken("")
+        viewModel.clearToken()
         Mockito.verify(authUsecase).saveAuthToken("")
     }
 

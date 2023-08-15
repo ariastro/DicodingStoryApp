@@ -43,7 +43,7 @@ class LoginViewModelTest {
             emit(Resource.Success(dummyLoginResponse))
         }
 
-        Mockito.`when`(loginViewModel.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
+        Mockito.`when`(authUsecase.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
 
         loginViewModel.login(dummyEmail, dummyPassword).collect {
             Assert.assertTrue(it is Resource.Success)
@@ -52,6 +52,8 @@ class LoginViewModelTest {
             if (it is Resource.Success) {
                 Assert.assertNotNull(it.data)
                 Assert.assertSame(dummyLoginResponse, it.data)
+            } else {
+                Assert.fail()
             }
         }
 
@@ -64,7 +66,7 @@ class LoginViewModelTest {
             emit(Resource.Error("login failed"))
         }
 
-        Mockito.`when`(loginViewModel.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
+        Mockito.`when`(authUsecase.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
 
         loginViewModel.login(dummyEmail, dummyPassword).collect {
             Assert.assertFalse(it is Resource.Success)

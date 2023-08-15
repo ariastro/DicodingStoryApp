@@ -9,8 +9,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
@@ -32,7 +32,7 @@ class SplashScreenViewModelTest {
     fun `Get auth token successfully`() = runTest {
         val expectedToken = flowOf(dummyToken)
 
-        `when`(splashScreenViewModel.getAuthToken()).thenReturn(expectedToken)
+        `when`(authUsecase.getAuthToken()).thenReturn(expectedToken)
 
         splashScreenViewModel.getAuthToken().collect {
             Assert.assertNotNull(it)
@@ -46,7 +46,7 @@ class SplashScreenViewModelTest {
     fun `Get authentication token empty`() = runTest {
         val expectedToken = flowOf("")
 
-        `when`(splashScreenViewModel.getAuthToken()).thenReturn(expectedToken)
+        `when`(authUsecase.getAuthToken()).thenReturn(expectedToken)
 
         splashScreenViewModel.getAuthToken().collect {
             Assert.assertEquals("", it)

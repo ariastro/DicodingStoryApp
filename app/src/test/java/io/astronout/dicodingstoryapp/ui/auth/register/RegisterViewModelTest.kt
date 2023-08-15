@@ -12,8 +12,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
@@ -38,7 +38,7 @@ internal class RegisterViewModelTest {
     fun `Registration success - result success`(): Unit = runTest {
         val expectedResponse = flowOf(Resource.Success(dummyRegisterResponse))
 
-        `when`(registerViewModel.register(dummyName, dummyEmail, dummyPassword)).thenReturn(
+        `when`(authUsecase.register(dummyName, dummyEmail, dummyPassword)).thenReturn(
             expectedResponse
         )
 
@@ -49,6 +49,8 @@ internal class RegisterViewModelTest {
             if (it is Resource.Success) {
                 Assert.assertNotNull(it.data)
                 Assert.assertSame(dummyRegisterResponse, it.data)
+            } else {
+                Assert.fail()
             }
         }
 
@@ -61,7 +63,7 @@ internal class RegisterViewModelTest {
             emit(Resource.Error("Register failed"))
         }
 
-        `when`(registerViewModel.register(dummyName, dummyEmail, dummyPassword)).thenReturn(
+        `when`(authUsecase.register(dummyName, dummyEmail, dummyPassword)).thenReturn(
             expectedResponse
         )
 
@@ -71,6 +73,8 @@ internal class RegisterViewModelTest {
 
             if (it is Resource.Error) {
                 Assert.assertNotNull(it.message)
+            } else {
+                Assert.fail()
             }
         }
     }

@@ -36,7 +36,7 @@ internal class MapsViewModelTest {
             emit(Resource.Success(dummyStories))
         }
 
-        Mockito.`when`(mapsViewModel.allStories()).thenReturn(expectedResponse)
+        Mockito.`when`(storyUsecase.getStories()).thenReturn(expectedResponse)
 
         mapsViewModel.allStories().collect {
             Assert.assertTrue(it is Resource.Success)
@@ -45,6 +45,8 @@ internal class MapsViewModelTest {
             if (it is Resource.Success) {
                 Assert.assertNotNull(it.data)
                 Assert.assertSame(it.data, dummyStories)
+            } else {
+                Assert.fail()
             }
         }
 
@@ -56,7 +58,7 @@ internal class MapsViewModelTest {
 
         val expectedResponse = flowOf(Resource.Error("Failed to get stories"))
 
-        Mockito.`when`(mapsViewModel.allStories()).thenReturn(expectedResponse)
+        Mockito.`when`(storyUsecase.getStories()).thenReturn(expectedResponse)
 
         mapsViewModel.allStories().collect {
             Assert.assertFalse(it is Resource.Success)
@@ -64,6 +66,8 @@ internal class MapsViewModelTest {
 
             if (it is Resource.Error) {
                 Assert.assertNotNull(it.message)
+            } else {
+                Assert.fail()
             }
         }
 

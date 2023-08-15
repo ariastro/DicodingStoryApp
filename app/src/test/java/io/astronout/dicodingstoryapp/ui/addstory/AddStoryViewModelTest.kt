@@ -35,7 +35,7 @@ class AddStoryViewModelTest {
         val expectedResponse = flowOf(Resource.Success(Unit))
 
         Mockito.`when`(
-            addStoryViewModel.addNewStory(
+            storyUsecase.addNewStory(
                 dummyFile,
                 dummyDescription,
                 null,
@@ -44,14 +44,16 @@ class AddStoryViewModelTest {
         ).thenReturn(expectedResponse)
 
         addStoryViewModel.addNewStory(dummyFile, dummyDescription, null, null).collect {
-                Assert.assertTrue(it is Resource.Success)
-                Assert.assertFalse(it is Resource.Error)
+            Assert.assertTrue(it is Resource.Success)
+            Assert.assertFalse(it is Resource.Error)
 
-                if (it is Resource.Success) {
-                    Assert.assertNotNull(it.data)
-                    Assert.assertSame(Unit, it.data)
-                }
+            if (it is Resource.Success) {
+                Assert.assertNotNull(it.data)
+                Assert.assertSame(Unit, it.data)
+            } else {
+                Assert.fail()
             }
+        }
 
         Mockito.verify(storyUsecase).addNewStory(dummyFile, dummyDescription, null, null)
     }
@@ -61,7 +63,7 @@ class AddStoryViewModelTest {
         val expectedResponse = flowOf(Resource.Error("Failed to add new story"))
 
         Mockito.`when`(
-            addStoryViewModel.addNewStory(
+            storyUsecase.addNewStory(
                 dummyFile,
                 dummyDescription,
                 null,
@@ -70,13 +72,15 @@ class AddStoryViewModelTest {
         ).thenReturn(expectedResponse)
 
         addStoryViewModel.addNewStory(dummyFile, dummyDescription, null, null).collect {
-                Assert.assertFalse(it is Resource.Success)
-                Assert.assertTrue(it is Resource.Error)
+            Assert.assertFalse(it is Resource.Success)
+            Assert.assertTrue(it is Resource.Error)
 
-                if (it is Resource.Error) {
-                    Assert.assertNotNull(it.message)
-                }
+            if (it is Resource.Error) {
+                Assert.assertNotNull(it.message)
+            } else {
+                Assert.fail()
             }
+        }
 
     }
 
