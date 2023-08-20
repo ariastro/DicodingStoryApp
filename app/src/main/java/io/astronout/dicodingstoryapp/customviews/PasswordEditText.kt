@@ -39,7 +39,7 @@ class PasswordEditText : AppCompatEditText {
         compoundDrawablePadding = 16
 
         doOnTextChanged { text, _, _, _ ->
-            if (text.toString().isNotEmpty() && text.toString().length < 6) {
+            if (text.toString().isNotEmpty() && text.toString().length < 8) {
                 error = context.getString(R.string.error_password_not_valid)
                 isValid = false
             } else {

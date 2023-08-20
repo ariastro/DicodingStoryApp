@@ -2,7 +2,7 @@
 <resources>
     <string name="error_email_not_valid">Alamat Email tidak valid</string>
     <string name="label_password">Kata Sandi</string>
-    <string name="error_password_not_valid">Kata Sandi harus lebih dari 6 karakter</string>
+    <string name="error_password_not_valid">Kata Sandi harus lebih dari 8 karakter</string>
     <string name="label_login_subtitle">Bagikan cerita belajarmu dengan siswa lainnya</string>
     <string name="label_doesnt_have_account">Belum punya akun?</string>
     <string name="label_register_now">Daftar sekarang!</string>

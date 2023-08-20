@@ -11,7 +11,7 @@ buildscript {
         timberVersion = "5.0.1"
         moshiVersion = "1.13.0"
         lottieVersion = "4.1.0"
-        roomVersion = "2.3.0"
+        roomVersion = "2.4.2"
         sandwichVersion = '1.2.0'
         hiltVersion = '2.44'
         viewbindingVersion = '1.0.3'
